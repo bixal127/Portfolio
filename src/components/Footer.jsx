@@ -92,22 +92,7 @@ export default function Footer() {
             className="text-center"
           >
             <p className="text-light/60 text-sm flex items-center justify-center gap-2">
-              © {currentYear} Bishal Lamichhane. Made with 
-              <motion.span
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 5, -5, 0]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-                className="text-red-400"
-              >
-                <FaHeart />
-              </motion.span>
-              using React & Tailwind CSS
+              © {currentYear} Bishal Lamichhane.
             </p>
           </motion.div>
 

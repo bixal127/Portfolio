@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { FaHtml5, FaCss3Alt, FaBootstrap, FaReact, FaJsSquare, FaJava, FaDatabase, FaGithub } from 'react-icons/fa'
-import { SiC, SiTailwindcss } from 'react-icons/si'
+import { SiC, SiTailwindcss, SiSpringboot } from 'react-icons/si'
 
 const skills = [
   { 
@@ -17,6 +17,12 @@ const skills = [
     borderColor: 'border-blue-500/30'
   },
   { 
+    name: 'Bootstrap', 
+    icon: <FaBootstrap className="text-4xl" />, 
+    color: 'from-purple-500 to-purple-600',
+    borderColor: 'border-purple-500/30'
+  },
+  { 
     name: 'JavaScript', 
     icon: <FaJsSquare className="text-4xl" />, 
     color: 'from-yellow-400 to-yellow-500',
@@ -29,22 +35,10 @@ const skills = [
     borderColor: 'border-cyan-400/30'
   },
   { 
-    name: 'Bootstrap', 
-    icon: <FaBootstrap className="text-4xl" />, 
-    color: 'from-purple-500 to-purple-600',
-    borderColor: 'border-purple-500/30'
-  },
-  { 
-    name: 'Tailwind', 
+    name: 'Tailwind CSS', 
     icon: <SiTailwindcss className="text-4xl" />, 
     color: 'from-teal-400 to-cyan-500',
     borderColor: 'border-teal-400/30'
-  },
-  { 
-    name: 'Github', 
-    icon: <FaGithub className="text-4xl" />, 
-    color: 'from-gray-600 to-gray-800',
-    borderColor: 'border-gray-600/30'
   },
   { 
     name: 'C programming', 
@@ -57,6 +51,18 @@ const skills = [
     icon: <FaJava className="text-4xl" />, 
     color: 'from-red-500 to-orange-600',
     borderColor: 'border-red-500/30'
+  },
+  {
+    name: 'Spring Boot',
+    icon: <SiSpringboot className="text-4xl" />,
+    color: 'from-green-600 to-green-700',
+    borderColor: 'border-green-600/30'
+  },
+  { 
+    name: 'Github', 
+    icon: <FaGithub className="text-4xl" />, 
+    color: 'from-gray-600 to-gray-800',
+    borderColor: 'border-gray-600/30'
   },
   { 
     name: 'Databases', 
@@ -93,8 +99,7 @@ export default function About() {
           className="max-w-4xl mx-auto mb-16"
         >
           <p className="text-lg md:text-xl text-light/90 leading-relaxed text-center">
-            I am a BCA student from Nepathya College (Tribhuvan University). I love building web applications and learning new technologies. 
-            I have worked on front-end UI and small backend APIs as part of college projects.
+            I am a BCA student from Nepathya College (Tribhuvan University). I love building web applications and learning new technologies.
           </p>
         </motion.div>
 

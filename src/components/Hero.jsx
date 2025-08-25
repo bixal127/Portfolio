@@ -71,7 +71,7 @@ export default function Hero() {
           >
             I build responsive web applications using{' '}
             <strong className="text-royal font-semibold">React</strong> and modern tools. 
-            Currently learning Java and Spring Boot.
+            I am currently learning Java and Spring Boot.
           </motion.p>
 
           <motion.div 

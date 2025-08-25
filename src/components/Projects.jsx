@@ -49,7 +49,7 @@ export default function Projects() {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-gold to-royal mx-auto mb-8" />
           <p className="text-lg text-light/80 max-w-2xl mx-auto">
-            Here are some of the projects I've worked on during my learning journey
+            Here are some of the projects I've worked on.
           </p>
         </motion.div>
 
