@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --container: 1200px;
+}
+
+html, body, #root { 
+  height: 100%; 
+}
+
+body {
+  @apply bg-navy text-light font-sans;
+}
+
+.container { 
+  max-width: var(--container); 
+  margin-left: auto; 
+  margin-right: auto; 
+  padding-left: 1rem; 
+  padding-right: 1rem; 
+}
+
+:focus { 
+  outline: 3px solid rgba(243, 156, 18, 0.5); 
+  outline-offset: 2px; 
+}
+
+button:focus, a:focus {
+  outline: 2px solid rgba(243, 156, 18, 0.8);
+  outline-offset: 2px;
+}
+
+img { 
+  display: block; 
+  max-width: 100%; 
+  height: auto;
+}
+
+html { 
+  scroll-behavior: smooth; 
+}
+
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+input, textarea {
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(243, 156, 18, 0.15);
+}
+
+.skill-card {
+  background: linear-gradient(135deg, rgba(52, 73, 94, 0.8) 0%, rgba(26, 37, 47, 0.9) 100%);
+  border: 1px solid rgba(243, 156, 18, 0.1);
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(243, 156, 18, 0.3);
+  box-shadow: 0 10px 30px rgba(243, 156, 18, 0.1);
+}
+
+.navbar-blur {
+  backdrop-filter: blur(20px);
+  background: rgba(44, 62, 80, 0.9);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #2C3E50 0%, #34495E 50%, #1A252F 100%);
+}
+
+.project-card {
+  background: linear-gradient(145deg, rgba(52, 73, 94, 0.6) 0%, rgba(26, 37, 47, 0.8) 100%);
+  border: 1px solid rgba(243, 156, 18, 0.1);
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(243, 156, 18, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+}
+
+.btn-secondary {
+  border: 2px solid rgba(243, 156, 18, 0.5);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  border-color: #F39C12;
+  background: rgba(243, 156, 18, 0.1);
+  transform: translateY(-2px);
+}
