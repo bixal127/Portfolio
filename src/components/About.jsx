@@ -29,7 +29,7 @@ const skills = [
     borderColor: 'border-yellow-500/30'
   },
   { 
-    name: 'React', 
+    name: 'React.js', 
     icon: <FaReact className="text-4xl" />, 
     color: 'from-cyan-400 to-blue-500',
     borderColor: 'border-cyan-400/30'
@@ -74,7 +74,7 @@ const skills = [
 
 export default function About() {
   return (
-    <section id="about" className="relative">
+    <section id="about" className="w-full relative">
       <div className="absolute inset-0 bg-gradient-to-br from-darker/50 to-navy/30 rounded-3xl" />
       
       <div className="relative z-10">
@@ -82,7 +82,7 @@ export default function About() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -95,11 +95,11 @@ export default function About() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="max-w-4xl mx-auto mb-16"
         >
           <p className="text-lg md:text-xl text-light/90 leading-relaxed text-center">
-            I am a BCA student from Nepathya College (Tribhuvan University). I love building web applications and learning new technologies.
+            I am a BCA student from Nepathya College (Tribhuvan University). I love building web applications and learning new technologies. I am currently learning Java and Spring Boot.
           </p>
         </motion.div>
 
@@ -107,10 +107,10 @@ export default function About() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
         >
           <h3 className="text-2xl md:text-3xl font-bold text-center mb-4">
-            Skills / <span className="text-gold">Expertise</span>
+            Skills / Expertise
           </h3>
           <p className="text-center text-light/80 mb-12">Technologies I've worked with</p>
           
@@ -122,27 +122,29 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ 
-                  duration: 0.5, 
-                  delay: index * 0.1,
+                  duration: 0.6, 
+                  delay: index * 0.08,
                   type: "spring",
-                  stiffness: 100
+                  stiffness: 200,
+                  damping: 25,
+                  ease: "easeOut"
                 }}
                 whileHover={{ 
-                  scale: 1.05,
-                  y: -5
+                  scale: 1.08,
+                  y: -8
                 }}
                 className={`skill-card rounded-2xl p-6 text-center group cursor-pointer ${skill.borderColor} border-2`}
               >
                 <motion.div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${skill.color} mb-4 group-hover:scale-110 transition-transform duration-300`}
-                  whileHover={{ rotate: [0, -10, 10, 0] }}
-                  transition={{ duration: 0.5 }}
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${skill.color} mb-4 group-hover:scale-110 transition-transform duration-500 ease-out`}
+                  whileHover={{ rotate: [0, -8, 8, 0] }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   <div className="text-white">
                     {skill.icon}
                   </div>
                 </motion.div>
-                <h4 className="font-semibold text-lg text-light group-hover:text-gold transition-colors">
+                <h4 className="font-semibold text-lg text-light group-hover:text-gold transition-colors duration-300 ease-out">
                   {skill.name}
                 </h4>
               </motion.div>

@@ -1,5 +1,27 @@
-## This Website is entirely desined and developed by Dinesh Poudel.
+# 🌟 Bishal Lamichhane - Portfolio Website
 
-Contact him through:
-Email: dineshacc02@gmail.com
-Website: https://www.dinesh2004.com.np
+A modern, responsive portfolio website showcasing projects, skills, and professional experience.
+
+
+## 🚀 Technologies Used
+- HTML5
+- CSS3
+- JavaScript
+- Tailwind CSS
+- Vite
+- PostCSS
+
+
+## 📁 Project Structure
+src/
+├── components/     # Resuable .jsx files
+├── assets/        # Images, icons, and static files
+└── App.jsx        # Main application component
+
+
+## 📄 Design and Development
+This portfolio website is designed, developed and deployed by Bishal Lamichhane in collaboration with Dinesh Poudel.
+
+**Contact Dinesh Poudel through:**
+- Email: dineshacc02@gmail.com
+- Website: https://www.dinesh-poudel.com.np
