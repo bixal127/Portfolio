@@ -12,54 +12,115 @@ const NAV = [
 
 export default function Header() {
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
 
+  // Close mobile menu when window is resized to desktop
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setOpen(false)
+      }
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  // Track active section for navigation highlighting
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '-20% 0px -20% 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }, observerOptions)
+
+    // Observe all sections
+    NAV.forEach(({ id }) => {
+      const element = document.getElementById(id)
+      if (element) observer.observe(element)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  const handleNavClick = (sectionId) => {
+    // Find the section element
+    const targetSection = document.querySelector(`section[id="${sectionId}"]`)
+    if (targetSection) {
+      // Get the main scrollable container
+      const mainContainer = document.querySelector('main')
+      if (mainContainer) {
+        // Calculate the correct scroll position
+        const sections = Array.from(mainContainer.querySelectorAll('section[id]'))
+        const sectionIndex = sections.findIndex(section => section.id === sectionId)
+        
+        if (sectionIndex !== -1) {
+          // Use scrollTop based on section index and viewport height
+          const scrollTop = sectionIndex * window.innerHeight
+          
+          mainContainer.scrollTo({
+            top: scrollTop,
+            behavior: 'smooth'
+          })
+        }
+      }
+    }
+    
+    // Close mobile menu
+    setOpen(false)
+    
+    // Update active section immediately for visual feedback
+    setActiveSection(sectionId)
+  }
 
   return (
     <>
       <motion.header 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'navbar-blur shadow-lg border-b border-gold/10' 
-            : 'bg-transparent'
-        }`}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="fixed w-full z-50 navbar-blur border-b border-gold/10"
       >
         <div className="container flex items-center justify-between py-4">
-          <motion.a 
-            href="#home" 
-            className="text-2xl font-bold text-gold hover:text-royal transition-colors"
+          <motion.button 
+            onClick={() => handleNavClick('home')}
+            className="text-2xl font-bold text-gold hover:text-royal transition-colors cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >
             Bixal
-          </motion.a>
+          </motion.button>
 
           <nav className="hidden md:flex items-center gap-8">
             {NAV.map((n, i) => (
-              <motion.a 
+              <motion.button 
                 key={n.id}
-                href={`#${n.id}`} 
-                className="relative hover:text-gold transition-colors font-medium"
+                onClick={() => handleNavClick(n.id)}
+                className={`relative hover:text-gold transition-colors font-medium cursor-pointer ${
+                  activeSection === n.id ? 'text-gold' : 'text-light'
+                }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 + 0.3 }}
+                transition={{ delay: i * 0.1 + 0.3, ease: "easeOut" }}
                 whileHover={{ y: -2 }}
               >
                 {n.label}
                 <motion.div
-                  className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold"
+                  className="absolute -bottom-1 left-0 h-0.5 bg-gold"
+                  initial={{ width: 0 }}
+                  animate={{ width: activeSection === n.id ? '100%' : 0 }}
                   whileHover={{ width: '100%' }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 />
-              </motion.a>
+              </motion.button>
             ))}
           </nav>
 
@@ -69,6 +130,7 @@ export default function Header() {
             aria-label="Toggle menu"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
           >
             {open ? <HiX size={28} /> : <HiMenu size={28} />}
           </motion.button>
@@ -76,30 +138,44 @@ export default function Header() {
 
         <AnimatePresence>
           {open && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden navbar-blur border-t border-gold/10"
-            >
-              <div className="container py-6 flex flex-col gap-4">
-                {NAV.map((n, i) => (
-                  <motion.a 
-                    key={n.id}
-                    href={`#${n.id}`} 
-                    onClick={() => setOpen(false)} 
-                    className="block py-3 hover:text-gold transition-colors font-medium border-b border-dark/50 last:border-0"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ x: 10 }}
-                  >
-                    {n.label}
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
+            <>
+              {/* Backdrop for mobile menu */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 bg-navy/80 backdrop-blur-sm top-[72px]"
+                onClick={() => setOpen(false)}
+              />
+              
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="md:hidden bg-darker border-t border-gold/10 relative z-10"
+              >
+                <div className="container py-6 flex flex-col gap-2">
+                  {NAV.map((n, i) => (
+                    <motion.button 
+                      key={n.id}
+                      onClick={() => handleNavClick(n.id)}
+                      className={`block py-4 px-4 rounded-xl hover:text-gold hover:bg-gold/10 transition-all font-medium border-b border-dark/30 last:border-0 text-left cursor-pointer ${
+                        activeSection === n.id ? 'text-gold bg-gold/10' : 'text-light'
+                      }`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1, ease: "easeOut" }}
+                      whileHover={{ x: 5, scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {n.label}
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </motion.header>

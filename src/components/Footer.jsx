@@ -1,6 +1,6 @@
 import React from 'react' 
 import { motion } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaInstagram, FaFacebook, FaHeart } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa'
 
 const socialLinks = [
   {
@@ -33,22 +33,22 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-darker border-t border-gold/10 py-12 mt-20">
+    <footer className="bg-darker border-t border-gold/10 py-4">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center gap-8"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row items-center justify-between gap-4"
         >
-          {/* Social Links */}
+          {/* Social Links - Centered on mobile, left on desktop */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex items-center gap-6"
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="flex items-center gap-3 order-1 sm:order-1"
           >
             {socialLinks.map((social, index) => (
               <motion.a
@@ -57,15 +57,16 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.name}
-                className={`w-12 h-12 rounded-full bg-dark/50 border border-gold/20 flex items-center justify-center text-xl text-light/70 transition-all ${social.color}`}
+                className={`w-10 h-10 rounded-full bg-dark/50 border border-gold/20 flex items-center justify-center text-lg text-light/70 transition-all ${social.color}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 + 0.2 }}
+                transition={{ delay: index * 0.1 + 0.2, ease: "easeOut" }}
                 whileHover={{ 
-                  scale: 1.1, 
+                  scale: 1.15, 
                   y: -3,
-                  borderColor: 'rgba(243, 156, 18, 0.5)'
+                  borderColor: 'rgba(243, 156, 18, 0.5)',
+                  backgroundColor: 'rgba(243, 156, 18, 0.1)'
                 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -74,40 +75,18 @@ export default function Footer() {
             ))}
           </motion.div>
 
-          {/* Divider */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="w-32 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"
-          />
-
-          {/* Copyright */}
+          {/* Copyright - Centered on mobile, right on desktop */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center"
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="order-2 sm:order-2 text-center sm:text-right"
           >
-            <p className="text-light/60 text-sm flex items-center justify-center gap-2">
-              © {currentYear} Bishal Lamichhane.
+            <p className="text-light/60 text-sm">
+              © {currentYear} Bishal Lamichhane
             </p>
           </motion.div>
-
-          {/* Back to top link */}
-          <motion.a
-            href="#home"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-gold/70 hover:text-gold text-sm font-medium transition-colors"
-            whileHover={{ y: -2 }}
-          >
-            ↑ Back to Top
-          </motion.a>
         </motion.div>
       </div>
     </footer>
