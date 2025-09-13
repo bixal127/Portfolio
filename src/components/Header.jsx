@@ -10,9 +10,8 @@ const NAV = [
   { id: 'contact', label: 'Contact' }
 ]
 
-export default function Header() {
+export default function Header({ onSectionChange, activeSection }) {
   const [open, setOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
 
   // Close mobile menu when window is resized to desktop
   useEffect(() => {
@@ -26,58 +25,12 @@ export default function Header() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Track active section for navigation highlighting
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.5,
-      rootMargin: '-20% 0px -20% 0px'
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
-        }
-      })
-    }, observerOptions)
-
-    // Observe all sections
-    NAV.forEach(({ id }) => {
-      const element = document.getElementById(id)
-      if (element) observer.observe(element)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
   const handleNavClick = (sectionId) => {
-    // Find the section element
-    const targetSection = document.querySelector(`section[id="${sectionId}"]`)
-    if (targetSection) {
-      // Get the main scrollable container
-      const mainContainer = document.querySelector('main')
-      if (mainContainer) {
-        // Calculate the correct scroll position
-        const sections = Array.from(mainContainer.querySelectorAll('section[id]'))
-        const sectionIndex = sections.findIndex(section => section.id === sectionId)
-        
-        if (sectionIndex !== -1) {
-          // Use scrollTop based on section index and viewport height
-          const scrollTop = sectionIndex * window.innerHeight
-          
-          mainContainer.scrollTo({
-            top: scrollTop,
-            behavior: 'smooth'
-          })
-        }
-      }
-    }
-    
-    // Close mobile menu
+    // Close mobile menu first
     setOpen(false)
     
-    // Update active section immediately for visual feedback
-    setActiveSection(sectionId)
+    // Update active section through parent component
+    onSectionChange(sectionId)
   }
 
   return (
@@ -86,7 +39,7 @@ export default function Header() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed w-full z-50 navbar-blur border-b border-gold/10"
+  className="fixed w-full z-50 bg-darker border-b border-gold/10"
       >
         <div className="container flex items-center justify-between py-4">
           <motion.button 
@@ -145,7 +98,7 @@ export default function Header() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="fixed inset-0 bg-navy/80 backdrop-blur-sm top-[72px]"
+                className="fixed inset-0 bg-navy/80 backdrop-blur-sm"
                 onClick={() => setOpen(false)}
               />
               

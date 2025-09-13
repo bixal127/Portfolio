@@ -3,12 +3,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        navy: '#2C3E50',      // Dark blue-gray (replacing black)
-        gold: '#F39C12',      // Golden yellow (brand color)
-        royal: '#3498DB',     // Royal blue (accent)
-        light: '#ECF0F1',     // Light gray (text)
-        dark: '#34495E',      // Dark gray (mid tone)
-        darker: '#1A252F'     // Darker navy (backgrounds)
+        navy: '#1A1A1A',      // Brownish black (primary background)
+        gold: '#F59E0B',      // Amber (brand color)
+        royal: '#06B6D4',     // Aqua (accent color)
+        light: '#FFFFFF',     // White (text)
+        dark: '#2D2D2D',      // Dark gray (mid tone)
+        darker: '#0F0F0F'     // Darker black (backgrounds)
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

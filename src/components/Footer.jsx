@@ -7,25 +7,25 @@ const socialLinks = [
     name: 'GitHub',
     url: 'https://github.com/bixal127',
     icon: <FaGithub />,
-    color: 'hover:text-gray-300'
+    color: 'hover:text-royal'
   },
   {
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/bishal-lamichhane-4b3730333/',
     icon: <FaLinkedin />,
-    color: 'hover:text-blue-400'
+    color: 'hover:text-royal'
   },
   {
     name: 'Instagram',
     url: 'https://www.instagram.com/tlg_bishal/',
     icon: <FaInstagram />,
-    color: 'hover:text-pink-400'
+    color: 'hover:text-gold'
   },
   {
     name: 'Facebook',
     url: 'https://www.facebook.com/bishalamichhane1',
     icon: <FaFacebook />,
-    color: 'hover:text-blue-500'
+    color: 'hover:text-royal'
   }
 ]
 
@@ -33,7 +33,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-darker border-t border-gold/10 py-4">
+  <footer className="bg-black bg-opacity-100 border-t border-gold/10 py-4">
       <div className="container">
         <motion.div
           initial={{ opacity: 0 }}
@@ -57,7 +57,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.name}
-                className={`w-10 h-10 rounded-full bg-dark/50 border border-gold/20 flex items-center justify-center text-lg text-light/70 transition-all ${social.color}`}
+                className={`w-10 h-10 rounded-full bg-black border border-gold/20 flex items-center justify-center text-lg text-light/70 transition-all ${social.color}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -65,8 +65,8 @@ export default function Footer() {
                 whileHover={{ 
                   scale: 1.15, 
                   y: -3,
-                  borderColor: 'rgba(243, 156, 18, 0.5)',
-                  backgroundColor: 'rgba(243, 156, 18, 0.1)'
+                  borderColor: 'rgba(245, 158, 11, 0.5)',
+                  backgroundColor: 'rgba(245, 158, 11, 0.1)'
                 }}
                 whileTap={{ scale: 0.95 }}
               >

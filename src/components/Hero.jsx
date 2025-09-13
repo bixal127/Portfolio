@@ -5,28 +5,30 @@ import profileImage from '../assets/profile.jpg'
 
 const Star = ({ id, initialX, initialY, color, size, mouseX, mouseY, onRemove }) => {
   const [position, setPosition] = useState({ x: initialX, y: initialY })
-  const [velocity, setVelocity] = useState({
-    x: (Math.random() - 0.5) * 2, // Slightly reduced for smoother movement
-    y: (Math.random() - 0.5) * 2  
-  })
   const [opacity, setOpacity] = useState(0)
   const [lifecycle, setLifecycle] = useState('appearing')
+  const velocityRef = useRef({
+    x: (Math.random() - 0.5) * 1, // Even slower for smoother movement with many stars
+    y: (Math.random() - 0.5) * 1  
+  })
+  const animationRef = useRef()
+  const lastUpdateRef = useRef(0)
   
   useEffect(() => {
-    // Star lifecycle management
+    // Star lifecycle management - shorter lifespan for continuous effect
     const appearTimer = setTimeout(() => {
       setOpacity(1)
       setLifecycle('living')
-    }, 300)
+    }, 100)
 
     const disappearTimer = setTimeout(() => {
       setLifecycle('disappearing')
       setOpacity(0)
-    }, 12000 + Math.random() * 8000) // More varied lifespan
+    }, 3000 + Math.random() * 2000) // Much shorter lifespan
 
     const removeTimer = setTimeout(() => {
       onRemove(id)
-    }, 13500 + Math.random() * 8000)
+    }, 4000 + Math.random() * 2000)
 
     return () => {
       clearTimeout(appearTimer)
@@ -36,41 +38,57 @@ const Star = ({ id, initialX, initialY, color, size, mouseX, mouseY, onRemove })
   }, [id, onRemove])
 
   useEffect(() => {
-    // Smoother continuous movement with mouse repulsion
-    const moveInterval = setInterval(() => {
+    // Optimized movement with frame rate limiting for many stars
+    const animate = (currentTime) => {
+      // Limit updates to 30fps for better performance with many stars
+      if (currentTime - lastUpdateRef.current < 33) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+      
+      lastUpdateRef.current = currentTime
+      
       setPosition(prev => {
-        let newX = prev.x + velocity.x
-        let newY = prev.y + velocity.y
+        let newX = prev.x + velocityRef.current.x
+        let newY = prev.y + velocityRef.current.y
         
-        // Mouse repulsion - smoother effect
+        // Simplified mouse repulsion - only for nearby stars
         const distance = Math.sqrt(
           Math.pow(mouseX - prev.x, 2) + Math.pow(mouseY - prev.y, 2)
         )
         
-        if (distance < 100 && distance > 0) {
+        if (distance < 60 && distance > 0) {
           const angle = Math.atan2(prev.y - mouseY, prev.x - mouseX)
-          const repulsionForce = (100 - distance) * 0.05 // Smoother repulsion
+          const repulsionForce = (60 - distance) * 0.02 // Even more reduced force
           
           newX += Math.cos(angle) * repulsionForce
           newY += Math.sin(angle) * repulsionForce
         }
         
-        // Smooth bounce off edges
+        // Bounce off edges
         if (newX <= 0 || newX >= window.innerWidth) {
-          setVelocity(v => ({ ...v, x: -v.x * 0.9 }))
+          velocityRef.current.x = -velocityRef.current.x * 0.7
           newX = Math.max(0, Math.min(window.innerWidth, newX))
         }
         if (newY <= 0 || newY >= window.innerHeight) {
-          setVelocity(v => ({ ...v, y: -v.y * 0.9 }))
+          velocityRef.current.y = -velocityRef.current.y * 0.7
           newY = Math.max(0, Math.min(window.innerHeight, newY))
         }
 
         return { x: newX, y: newY }
       })
-    }, 50) // Slightly less frequent for smoother performance
-
-    return () => clearInterval(moveInterval)
-  }, [velocity, mouseX, mouseY])
+      
+      animationRef.current = requestAnimationFrame(animate)
+    }
+    
+    animationRef.current = requestAnimationFrame(animate)
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [mouseX, mouseY])
 
   return (
     <motion.div
@@ -80,20 +98,22 @@ const Star = ({ id, initialX, initialY, color, size, mouseX, mouseY, onRemove })
         top: position.y - size/2,
         width: size,
         height: size,
+        transform: 'translateZ(0)',
+        willChange: 'transform, opacity',
       }}
       animate={{
         opacity: opacity,
         rotate: [0, 360],
-        scale: lifecycle === 'appearing' ? [0, 1] : lifecycle === 'disappearing' ? [1, 0] : [1, 1.08, 1],
+        scale: lifecycle === 'appearing' ? [0, 1] : lifecycle === 'disappearing' ? [1, 0] : [1, 1.05, 1],
       }}
       transition={{
-        opacity: { duration: 0.8, ease: "easeInOut" },
-        rotate: { duration: 12 + Math.random() * 6, repeat: Infinity, ease: "linear" },
+        opacity: { duration: 0.3, ease: "easeInOut" },
+        rotate: { duration: 8 + Math.random() * 4, repeat: Infinity, ease: "linear" }, // Faster rotation
         scale: lifecycle === 'living' ? { 
-          duration: 3 + Math.random() * 2, 
+          duration: 2 + Math.random() * 1.5, 
           repeat: Infinity, 
           ease: "easeInOut" 
-        } : { duration: 0.8, ease: "easeInOut" }
+        } : { duration: 0.3, ease: "easeInOut" }
       }}
     >
       <div
@@ -179,9 +199,9 @@ const StarField = () => {
   const containerRef = useRef(null)
 
   const colors = [
-    '#ff6b6b', '#ffd93d', '#4ecdc4', '#45b7d1', '#96ceb4', 
-    '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', 
-    '#ff9f43', '#ffffff', '#ddd6fe', '#fef3c7', '#dcfce7',
+    '#F59E0B', '#06B6D4', '#F3F4F6', '#D97706', '#0891B2', 
+    '#F59E0B', '#06B6D4', '#F3F4F6', '#D97706', '#0891B2', 
+    '#F59E0B', '#06B6D4', '#F3F4F6', '#D97706', '#0891B2',
   ]
 
   const createStar = () => {
@@ -199,10 +219,9 @@ const StarField = () => {
   }
 
   useEffect(() => {
-    // Optimized initial star count
+    // Lower initial star count for performance and less clutter
     const initialStars = []
-    const numStars = Math.min(45, Math.max(25, Math.floor(window.innerWidth / 25)))
-    
+    const numStars = Math.min(40, Math.max(20, Math.floor(window.innerWidth / 40)))
     for (let i = 0; i < numStars; i++) {
       initialStars.push({
         ...createStar(),
@@ -214,11 +233,10 @@ const StarField = () => {
   }, [])
 
   useEffect(() => {
-    // Smoother star generation
+    // Lower max star count and less frequent generation
     const addStarInterval = setInterval(() => {
       setStars(prevStars => {
-        const maxStars = Math.min(60, Math.max(30, Math.floor(window.innerWidth / 20)))
-        
+        const maxStars = Math.min(50, Math.max(25, Math.floor(window.innerWidth / 35)))
         if (prevStars.length < maxStars) {
           const newStar = createStar()
           setNextId(prev => prev + 1)
@@ -226,24 +244,31 @@ const StarField = () => {
         }
         return prevStars
       })
-    }, 800 + Math.random() * 1200) // More varied timing
+    }, 1200 + Math.random() * 800) // Less frequent generation
 
     return () => clearInterval(addStarInterval)
   }, [nextId])
 
   useEffect(() => {
+    let mouseMoveTimeout
     const handleMouseMove = (e) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        setMousePos({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top
-        })
-      }
+      // Throttle mouse movement for better performance
+      if (mouseMoveTimeout) return
+      
+      mouseMoveTimeout = setTimeout(() => {
+        if (containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect()
+          setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+          })
+        }
+        mouseMoveTimeout = null
+      }, 16) // ~60fps
     }
 
     const handleResize = () => {
-      const maxStars = Math.min(60, Math.max(30, Math.floor(window.innerWidth / 20)))
+      const maxStars = Math.min(300, Math.max(150, Math.floor(window.innerWidth / 1.5)))
       setStars(prevStars => prevStars.slice(0, maxStars))
     }
 
@@ -255,12 +280,15 @@ const StarField = () => {
       return () => {
         container.removeEventListener('mousemove', handleMouseMove)
         window.removeEventListener('resize', handleResize)
+        if (mouseMoveTimeout) {
+          clearTimeout(mouseMoveTimeout)
+        }
       }
     }
   }, [])
 
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden">
+  <div ref={containerRef} className="absolute inset-0 overflow-hidden star-field pointer-events-none" style={{position: 'absolute'}}>
       {stars.map(star => (
         <Star
           key={star.id}
@@ -286,22 +314,24 @@ export default function Hero() {
   ]
 
   return (
-    <section id="home" className="min-h-screen w-full hero-gradient relative overflow-hidden">
-      {/* Animated star field background */}
-      <StarField />
+    <section id="home" className="flex-1 w-full h-full bg-darker overflow-hidden flex items-center justify-center z-0 relative">
+      {/* Animated star field background - now only within Hero section */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <StarField />
+      </div>
 
-      <div className="container grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-20 lg:py-32 relative z-10 h-full">
+      <div className="container grid lg:grid-cols-2 gap-4 lg:gap-8 items-center py-0 lg:py-8 relative z-10 w-full h-full min-h-0 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="order-2 lg:order-1"
+          className="order-2 lg:order-1 flex flex-col items-center text-center lg:items-start lg:text-left"
         >
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4 lg:mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4 lg:mb-6 w-full"
           >
             Hi, I'm{' '}
             <motion.span 
@@ -323,7 +353,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl text-light/80 mb-6 lg:mb-8 leading-relaxed min-h-[2em]"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-2xl text-light/80 mb-6 lg:mb-8 leading-relaxed min-h-[2em] w-full"
           >
             <Typewriter 
               texts={typewriterTexts}

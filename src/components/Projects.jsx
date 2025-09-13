@@ -32,7 +32,7 @@ export default function Projects() {
   )
 
   return (
-    <section id="projects" className="w-full">
+  <section id="projects" className="w-full pt-0 mt-0">
       <div className="w-full max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

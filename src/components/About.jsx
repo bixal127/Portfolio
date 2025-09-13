@@ -7,76 +7,74 @@ const skills = [
   { 
     name: 'HTML', 
     icon: <FaHtml5 className="text-4xl" />, 
-    color: 'from-orange-500 to-red-500',
-    borderColor: 'border-orange-500/30'
+    borderColor: 'border-gold/30',
+    color: '#e34c26'
   },
   { 
     name: 'CSS', 
     icon: <FaCss3Alt className="text-4xl" />, 
-    color: 'from-blue-500 to-blue-600',
-    borderColor: 'border-blue-500/30'
+    borderColor: 'border-royal/30',
+    color: '#1572B6'
   },
   { 
     name: 'Bootstrap', 
     icon: <FaBootstrap className="text-4xl" />, 
-    color: 'from-purple-500 to-purple-600',
-    borderColor: 'border-purple-500/30'
+    borderColor: 'border-gold/30',
+    color: '#7952B3'
   },
   { 
     name: 'JavaScript', 
     icon: <FaJsSquare className="text-4xl" />, 
-    color: 'from-yellow-400 to-yellow-500',
-    borderColor: 'border-yellow-500/30'
+    borderColor: 'border-royal/30',
+    color: '#f7df1e'
   },
   { 
     name: 'React.js', 
     icon: <FaReact className="text-4xl" />, 
-    color: 'from-cyan-400 to-blue-500',
-    borderColor: 'border-cyan-400/30'
+    borderColor: 'border-gold/30',
+    color: '#61dafb'
   },
   { 
     name: 'Tailwind CSS', 
     icon: <SiTailwindcss className="text-4xl" />, 
-    color: 'from-teal-400 to-cyan-500',
-    borderColor: 'border-teal-400/30'
+    borderColor: 'border-royal/30',
+    color: '#38bdf8'
   },
   { 
     name: 'C programming', 
     icon: <SiC className="text-4xl" />, 
-    color: 'from-blue-600 to-indigo-700',
-    borderColor: 'border-blue-600/30'
+    borderColor: 'border-gold/30',
+    color: '#00599C'
   },
   { 
     name: 'Java', 
     icon: <FaJava className="text-4xl" />, 
-    color: 'from-red-500 to-orange-600',
-    borderColor: 'border-red-500/30'
+    borderColor: 'border-royal/30',
+    color: '#007396'
   },
   {
     name: 'Spring Boot',
     icon: <SiSpringboot className="text-4xl" />,
-    color: 'from-green-600 to-green-700',
-    borderColor: 'border-green-600/30'
+    borderColor: 'border-gold/30',
+    color: '#6DB33F'
   },
   { 
     name: 'Github', 
     icon: <FaGithub className="text-4xl" />, 
-    color: 'from-gray-600 to-gray-800',
-    borderColor: 'border-gray-600/30'
+    borderColor: 'border-royal/30',
+    color: '#181717'
   },
   { 
     name: 'Databases', 
     icon: <FaDatabase className="text-4xl" />, 
-    color: 'from-green-500 to-emerald-600',
-    borderColor: 'border-green-500/30'
+    borderColor: 'border-gold/30',
+    color: '#4DB33D'
   }
 ]
 
 export default function About() {
   return (
-    <section id="about" className="w-full relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-darker/50 to-navy/30 rounded-3xl" />
-      
+    <section id="about" className="w-full relative pt-0 mt-0">
       <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -136,13 +134,13 @@ export default function About() {
                 className={`skill-card rounded-2xl p-6 text-center group cursor-pointer ${skill.borderColor} border-2`}
               >
                 <motion.div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${skill.color} mb-4 group-hover:scale-110 transition-transform duration-500 ease-out`}
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-dark mb-4 group-hover:scale-110 transition-transform duration-500 ease-out`}
                   whileHover={{ rotate: [0, -8, 8, 0] }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  <div className="text-white">
+                  <span style={{ color: skill.color }}>
                     {skill.icon}
-                  </div>
+                  </span>
                 </motion.div>
                 <h4 className="font-semibold text-lg text-light group-hover:text-gold transition-colors duration-300 ease-out">
                   {skill.name}

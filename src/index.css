@@ -23,12 +23,12 @@ body {
 }
 
 :focus {
-  outline: 3px solid rgba(243, 156, 18, 0.5);
+  outline: 3px solid rgba(245, 158, 11, 0.5);
   outline-offset: 2px;
 }
 
 button:focus, a:focus {
-  outline: 2px solid rgba(243, 156, 18, 0.8);
+  outline: 2px solid rgba(245, 158, 11, 0.8);
   outline-offset: 2px;
 }
 
@@ -61,74 +61,74 @@ input, textarea {
 
 input:focus, textarea:focus {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(243, 156, 18, 0.2);
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.2);
 }
 
 .skill-card {
-  background: linear-gradient(135deg, rgba(52, 73, 94, 0.8) 0%, rgba(26, 37, 47, 0.9) 100%);
-  border: 1px solid rgba(243, 156, 18, 0.1);
+  background: linear-gradient(135deg, rgba(45, 45, 45, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.1);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skill-card:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(243, 156, 18, 0.4);
-  box-shadow: 0 15px 40px rgba(243, 156, 18, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 15px 40px rgba(245, 158, 11, 0.15);
 }
 
 .navbar-blur {
   backdrop-filter: blur(20px);
-  background: rgba(44, 62, 80, 0.95);
+  background: rgba(0, 0, 0, 0.95);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, #2C3E50 0%, #34495E 50%, #1A252F 100%);
+  background: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 50%, #2D2D2D 100%);
 }
 
 .project-card {
-  background: linear-gradient(145deg, rgba(52, 73, 94, 0.6) 0%, rgba(26, 37, 47, 0.8) 100%);
-  border: 1px solid rgba(243, 156, 18, 0.1);
+  background: linear-gradient(145deg, rgba(45, 45, 45, 0.6) 0%, rgba(15, 15, 15, 0.8) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.1);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-card:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(243, 156, 18, 0.4);
+  border-color: rgba(245, 158, 11, 0.4);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
   transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(243, 156, 18, 0.4);
+  box-shadow: 0 12px 25px rgba(245, 158, 11, 0.4);
 }
 
 .btn-primary:active {
   transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(243, 156, 18, 0.3);
+  box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3);
 }
 
 .btn-secondary {
-  border: 2px solid rgba(243, 156, 18, 0.5);
+  border: 2px solid rgba(245, 158, 11, 0.5);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-secondary:hover {
-  border-color: #F39C12;
-  background: rgba(243, 156, 18, 0.15);
+  border-color: #F59E0B;
+  background: rgba(245, 158, 11, 0.15);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(243, 156, 18, 0.2);
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
 }
 
 .btn-secondary:active {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.15);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
 }
 
 /* Smoother page transitions */
@@ -136,11 +136,39 @@ section {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Ensure sections take full height and align content properly */
+section {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 100px; /* Add space for header */
+}
+
 /* Enhanced mobile menu animations */
 @media (max-width: 768px) {
   .navbar-blur {
     backdrop-filter: blur(15px);
   }
+}
+
+/* Optimize star animations for better performance with many stars */
+.star-field {
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout style paint; /* CSS containment for better performance */
+}
+
+.star-field * {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  contain: layout style paint; /* CSS containment for better performance */
+}
+
+/* Optimize for many animated elements */
+.star-field > div {
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Smooth scroll behavior for main container */

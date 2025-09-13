@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaEnvelope, FaUser, FaComment, FaPaperPlane, FaAddressCard } from 'react-icons/fa'
+import { FaEnvelope, FaUser, FaComment, FaPaperPlane } from 'react-icons/fa'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -39,10 +39,10 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="w-full">
+  <section id="contact" className="w-full pt-0 mt-0">
       <div className="w-full max-w-4xl mx-auto relative">
         {/* Background decoration matching other sections */}
-        <div className="absolute inset-0 bg-gradient-to-br from-navy/50 to-darker/30 rounded-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-darker/50 to-navy/30 rounded-3xl" />
         
         <div className="relative z-10">
           <motion.div
@@ -59,13 +59,6 @@ export default function Contact() {
               transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
               className="flex items-center justify-center gap-4 mb-6"
             >
-              <motion.div
-                className="w-16 h-16 bg-gradient-to-br from-gold to-royal rounded-2xl flex items-center justify-center"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              >
-                <FaAddressCard className="text-2xl text-white" />
-              </motion.div>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-light">
                   Contact <span className="text-gold">Me</span>
@@ -115,7 +108,7 @@ export default function Contact() {
                   onClick={() => setSelectedEmail(emails.secondary)}
                   className={`px-4 py-3 rounded-xl font-medium transition-all ${
                     selectedEmail === emails.secondary
-                      ? 'bg-gold text-navy'
+                    ? 'bg-gold text-navy'
                       : 'bg-dark/50 border border-gold/20 text-light hover:border-gold/40'
                   }`}
                   whileHover={{ scale: 1.02, y: -1 }}
