@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -7,6 +7,31 @@ import Projects from './components/Projects'
 import Resume from './components/Resume'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+
+// Enhanced page transition variants
+const pageVariants = {
+  initial: { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.95
+  },
+  in: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1
+  },
+  out: { 
+    opacity: 0, 
+    y: -50,
+    scale: 1.05
+  }
+}
+
+const pageTransition = {
+  type: "tween",
+  ease: [0.4, 0, 0.2, 1],
+  duration: 0.6
+}
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -61,20 +86,24 @@ export default function App() {
   }
 
   return (
-  <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden">
       <Header onSectionChange={setActiveSection} activeSection={activeSection} />
       
-      {/* Main content area - shows only active section */}
-  <main className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none">
-        <motion.div
-          key={activeSection}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        >
-          {renderActiveSection()}
-        </motion.div>
+      {/* Enhanced main content area with smoother transitions */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={activeSection}
+            initial="initial"
+            animate="in"
+            exit="out"
+            variants={pageVariants}
+            transition={pageTransition}
+            className="min-h-full"
+          >
+            {renderActiveSection()}
+          </motion.div>
+        </AnimatePresence>
       </main>
       
       <Footer />
