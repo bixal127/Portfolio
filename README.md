@@ -20,7 +20,7 @@ src/
 
 
 ## 📄 Design and Development
-This portfolio website is designed, developed and deployed by Bishal Lamichhane in collaboration with Dinesh Poudel.
+This portfolio website is designed, developed and deployed by [Bishal Lamichhane](https://bixal127.github.io/Portfolio/) (myself) in collaboration with [Dinesh Poudel](https://www.dinesh-poudel.com.np)
 
 **Contact Dinesh Poudel through:**
 - Email: dineshacc02@gmail.com
