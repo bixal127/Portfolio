@@ -2,7 +2,7 @@
   "name": "bishal-portfolio",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://bixal127.github.io/Portfolio",
+  "homepage": "https://www.bishallamichhane.name.np",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
